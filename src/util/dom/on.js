@@ -4,6 +4,6 @@ import $find from './find';
 // given : $el
 // then : handler
 
-export default (query, event, handler) => {
-    $find(query).addEventListener(event, handler);
+export default (query, eventName, handler) => {
+    $find(query).addEventListener(eventName, handler);
 };

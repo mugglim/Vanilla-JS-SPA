@@ -9,11 +9,13 @@ export default class extends Veact {
     }
 
     willMount() {
-        const handleIncraseCount = () =>
+        const handleIncraseCount = () => {
             this.setState({ count: this.state.count + 1 });
+        };
 
-        const handleDecreaseCount = () =>
+        const handleDecreaseCount = () => {
             this.setState({ count: this.state.count - 1 });
+        };
 
         _.each(
             this.$target,
