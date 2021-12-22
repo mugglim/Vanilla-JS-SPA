@@ -2,34 +2,38 @@ export default class Veact {
     constructor($target) {
         this.$target = $target;
         this.isMounted = false;
-        this.state = {};
     }
 
-    isStateChanged(newState) {
-        return JSON.stringify(this.state) === JSON.stringify(newState);
+    initState(initalState) {
+        this.state = initalState;
+        this.mount();
     }
 
     setState(newState) {
-        if (!this.isMounted) {
-            this.beforeMount();
-        }
-
         this.state = { ...this.state, ...newState };
-        this.render();
+        this.update();
+    }
 
-        this.afterMount();
+    mount() {
+        if (!this.isMounted) {
+            this.isMounted = true;
+            this.willMount();
+        }
+        this.render();
+        this.didMount();
     }
 
     template() {
         return ``;
     }
-
     render() {
-        console.log(this.$target);
         this.$target.innerHTML = this.template();
     }
 
-    beforeMount() {}
-    afterMount() {}
-    willUpdate() {}
+    willMount() {}
+    didMount() {}
+
+    update() {
+        this.render();
+    }
 }

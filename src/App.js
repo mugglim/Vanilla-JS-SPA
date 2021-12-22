@@ -1,26 +1,30 @@
 import Veact from './core/Veact';
+import _ from '@/util/fp';
 import $ from '@/util/dom';
 
 export default class extends Veact {
     constructor($target) {
         super($target);
-        this.setState({ count: 1 });
+        this.initState({ count: 1 });
     }
 
-    afterMount() {
+    willMount() {
         const handleIncraseCount = () =>
             this.setState({ count: this.state.count + 1 });
+
         const handleDecreaseCount = () =>
             this.setState({ count: this.state.count - 1 });
 
-        $.on('.increase__btn', 'click', handleIncraseCount);
-        $.on('.decrease__btn', 'click', handleDecreaseCount);
+        _.each(
+            this.$target,
+            $.delegate('.increase__btn', 'click', handleIncraseCount),
+            $.delegate('.decrease__btn', 'click', handleDecreaseCount),
+        );
     }
 
     template() {
-        const { count } = this.state;
         return `
-            <h2>count : ${count}</h2>
+            <h2>count : ${this.state.count}</h2>
             <button class="increase__btn">+</button>
             <button class="decrease__btn">-</button>
         `;
