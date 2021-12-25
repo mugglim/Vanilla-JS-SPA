@@ -1,6 +1,7 @@
 export default class Veact {
-    constructor($target) {
+    constructor($target, props = null) {
         this.$target = $target;
+        this.props = props;
         this.isMounted = false;
     }
 
