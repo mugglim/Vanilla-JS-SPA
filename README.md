@@ -31,6 +31,12 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
 
 > npm run dev
 
+## Demo
+
+### Global State Management
+
+![global-state-management](./images/global-state.gif)
+
 ## Check List
 
 -   Component
@@ -44,8 +50,8 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
     -   [x] 상태가 지역적으로 동작한다. (다른 지역상태에 영향 X)
 
 -   전역 상태 관리
-    -   [ ] flux 패턴을 이용하였다. (action,dispatch)
-    -   [ ] 싱글톤으로 전역 store가 관리된다.
+    -   [x] flux 패턴을 이용하였다. (action,dispatch)
+    -   [x] 싱글톤으로 전역 store가 관리된다.
 -   Build
     -   [x] Webpack을 통해 빌드하였다.
     -   [x] Babel을 통해 ES6+ 문법을 트랜스파일링하였다.
@@ -59,7 +65,7 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
     -   [ ] 응답의 요청/실패에 대한 UI처리를 수행한다.
 -   util(optional)
     -   [ ] debounce, throttling
-    -   [ ] functional programming(go, pipe, curry, filter)
+    -   [ ] functional programming(go, pipe, curry, filter, each)
 
 ### Ref.
 
