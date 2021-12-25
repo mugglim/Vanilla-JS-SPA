@@ -28,8 +28,14 @@ export default class Counter extends Veact {
 
     template() {
         return `
-            <h2>local-state-count : ${this.state.count}</h2>
-            <h2>global-state-count : ${CounterStore.getState().count}</h2>
+            <h1>Counter Component</h1>
+
+            <h3>
+                local-state-count : ${this.state.count}
+                global-state-count : ${CounterStore.getState().count}
+            </h3>
+
+            <h4>Click the button below to change local state</h4>
             <button class="increase__btn">+</button>
             <button class="decrease__btn">-</button>
         `;

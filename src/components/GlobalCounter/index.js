@@ -26,7 +26,10 @@ export default class GlobalCounter extends Veact {
     template() {
         const { count } = CounterStore.getState();
         return `
-            <h2>global-state-count : ${count}</h2>
+            <h1>GlobalCounter Component</h1>
+            <h3>global-state-count : ${count}</h3>
+
+            <h4>Click the button below to change global state</h4>
             <button class="increase__btn">+</button>
             <button class="decrease__btn">-</button>
         `;
