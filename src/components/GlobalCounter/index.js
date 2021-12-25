@@ -3,7 +3,7 @@ import _ from '@/util/fp';
 import $ from '@/util/dom';
 import CounterStore from '@/store/CounterStore';
 
-export default class Counter extends Veact {
+export default class GlobalCounter extends Veact {
     constructor($target) {
         super($target);
         CounterStore.subscribe(this.render.bind(this));
@@ -11,13 +11,10 @@ export default class Counter extends Veact {
     }
 
     willMount() {
-        const handleIncraseCount = () => {
-            this.setState({ count: this.state.count + 1 });
-        };
+        const { dispatch } = CounterStore;
 
-        const handleDecreaseCount = () => {
-            this.setState({ count: this.state.count - 1 });
-        };
+        const handleIncraseCount = () => dispatch({ type: 'INCREASE_COUNT' });
+        const handleDecreaseCount = () => dispatch({ type: 'DECREASE_COUNT' });
 
         _.each(
             this.$target,
@@ -27,9 +24,9 @@ export default class Counter extends Veact {
     }
 
     template() {
+        const { count } = CounterStore.getState();
         return `
-            <h2>local-state-count : ${this.state.count}</h2>
-            <h2>global-state-count : ${CounterStore.getState().count}</h2>
+            <h2>global-state-count : ${count}</h2>
             <button class="increase__btn">+</button>
             <button class="decrease__btn">-</button>
         `;

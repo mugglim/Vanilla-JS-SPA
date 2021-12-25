@@ -2,7 +2,7 @@ import Veact from './core/Veact';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
 
-import Counter from '@/components/Counter';
+import { Counter, GlobalCounter } from '@/components';
 
 export default class extends Veact {
     constructor($target) {
@@ -13,10 +13,12 @@ export default class extends Veact {
     template() {
         return `
             <div class="counter"></div>
+            <div class="global__counter"></div>
         `;
     }
 
     didMount() {
         new Counter($.find('.counter'));
+        new GlobalCounter($.find('.global__counter'));
     }
 }
