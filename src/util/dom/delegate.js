@@ -1,14 +1,17 @@
 import $find from './find';
 
-export default (childQuery, eventName, handler) => $parent => {
+export default (childClassName, eventName, handler) => $parent => {
     $parent.addEventListener(eventName, event => {
+        event.preventDefault();
         event.stopPropagation();
 
         const $target = event.target;
-        const $child = $find(childQuery, $parent);
+        const targetClassName = Array.from($target.classList)
+            .map(className => '.' + className)
+            .join(' ');
 
-        if ($child === $target) {
-            handler();
+        if (childClassName === targetClassName) {
+            handler(event);
         }
     });
 };

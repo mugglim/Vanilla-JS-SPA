@@ -1,6 +1,8 @@
+import $ from '@/util/dom';
+
 export default class Veact {
     constructor($target, props = null) {
-        this.$target = $target;
+        this.$target = $.find($target);
         this.props = props;
         this.isMounted = false;
     }
