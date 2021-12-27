@@ -67,6 +67,10 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
     -   [ ] debounce, throttling
     -   [ ] functional programming(go, pipe, curry, filter, each)
 
+### notes
+
+-   [History API](./docs/historyAPI.md)
+
 ### Ref.
 
 -   [FxDOM](https://github.com/marpple/FxDOM)
