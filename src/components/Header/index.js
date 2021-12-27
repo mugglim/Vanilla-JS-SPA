@@ -1,6 +1,7 @@
 import Veact from '@/core/Veact';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
+import Router from '@/core/Router';
 
 export default class Counter extends Veact {
     constructor($target) {
@@ -18,7 +19,7 @@ export default class Counter extends Veact {
     willMount() {
         const handleNavClick = ({ target }) => {
             const navHref = target.getAttribute('href');
-            console.log(navHref);
+            Router.navigateTo(navHref);
         };
 
         _.each(this.$target, $.delegate('.nav__link', 'click', handleNavClick));

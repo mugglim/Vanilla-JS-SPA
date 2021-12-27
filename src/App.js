@@ -2,6 +2,7 @@ import Veact from '@/core/Veact';
 import $ from '@/util/dom';
 import { Header } from '@/components';
 import { Home, About } from '@/pages';
+import Router from '@/core/Router';
 
 export default class extends Veact {
     constructor($target) {
@@ -12,15 +13,17 @@ export default class extends Veact {
     template() {
         return `
             <div class="nav"></div>
-            <div class="home"></div>
-            <div class="about"></div>
-
+            <div class="route"></div>
         `;
     }
 
     didMount() {
         new Header('.nav');
-        new Home('.home');
-        new About('.about');
+        Router.subscribe({ path: '/', component: () => new Home('.route') });
+        Router.subscribe({
+            path: '/about',
+            component: () => new About('.route'),
+        });
+        Router.navigateTo('/');
     }
 }
