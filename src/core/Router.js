@@ -19,10 +19,16 @@ const Router = (() => {
         navigateTo(path);
     };
 
+    const initPath = () => {
+        const { pathname } = window.location;
+        navigateTo(pathname);
+    };
+
     return {
         subscribe,
         navigateTo,
         handlePopstate,
+        initPath,
     };
 })();
 

@@ -39,6 +39,7 @@ module.exports = {
         extensions: ['.js'],
     },
     devServer: {
+        historyApiFallback: true,
         static: {
             directory: buildPath,
         },

@@ -24,6 +24,5 @@ export default class extends Veact {
             path: '/about',
             component: () => new About('.route'),
         });
-        Router.navigateTo('/');
     }
 }
