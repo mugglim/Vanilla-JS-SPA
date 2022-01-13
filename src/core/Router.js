@@ -4,19 +4,19 @@ const Router = (() => {
     const routes = {};
 
     const navigateTo = path => {
-        const component = routes[path];
+        const renderComponent = routes[path];
         history.pushState({ path }, null, path);
-        component();
+        renderComponent();
     };
 
     const subscribe = ({ path, component }) => {
         routes[path] = component;
     };
 
-    const handlePopstate = event => {
-        const { state } = event;
+    const handlePopstate = ({ state }) => {
         const { path } = state;
-        navigateTo(path);
+        const renderComponent = routes[path];
+        renderComponent();
     };
 
     const initPath = () => {
