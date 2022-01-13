@@ -1,41 +1,35 @@
 import Veact from '@/core/Veact';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
-import CounterStore from '@/store/CounterStore';
 
 export default class Counter extends Veact {
     constructor($target) {
         super($target);
-        CounterStore.subscribe(this.render.bind(this));
         this.initState({ count: 1 });
     }
 
     willMount() {
-        const handleIncraseCount = () => {
+        const handleIncreaseButtonClick = () => {
             this.setState({ count: this.state.count + 1 });
         };
 
-        const handleDecreaseCount = () => {
+        const handleDecreaseButtonClick = () => {
             this.setState({ count: this.state.count - 1 });
         };
 
         _.each(
             this.$target,
-            $.delegate('.increase__btn', 'click', handleIncraseCount),
-            $.delegate('.decrease__btn', 'click', handleDecreaseCount),
+            $.delegate('.increase__btn', 'click', handleIncreaseButtonClick),
+            $.delegate('.decrease__btn', 'click', handleDecreaseButtonClick),
         );
     }
 
     template() {
         return `
-            <h1>Counter Component</h1>
-
             <h3>
-                local-state-count : ${this.state.count}
-                global-state-count : ${CounterStore.getState().count}
+                count : ${this.state.count}
             </h3>
 
-            <h4>Click the button below to change local state</h4>
             <button class="increase__btn">+</button>
             <button class="decrease__btn">-</button>
         `;
