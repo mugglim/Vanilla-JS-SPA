@@ -4,25 +4,29 @@ import { Header } from '@/components';
 import { Home, About } from '@/pages';
 import Router from '@/core/Router';
 
-export default class extends Veact {
-    constructor($target) {
-        super($target);
+export default class App extends Veact {
+    constructor($target, props) {
+        super($target, props);
         this.initState({});
     }
 
     template() {
         return `
             <div class="nav"></div>
-            <div class="route"></div>
+            <div class="main-route"></div>
+            <div class="product-item-list"></div>
         `;
     }
 
     didMount() {
         new Header('.nav');
-        Router.subscribe({ path: '/', component: () => new Home('.route') });
+        Router.subscribe({
+            path: '/',
+            component: () => new Home('.main-route'),
+        });
         Router.subscribe({
             path: '/about',
-            component: () => new About('.route'),
+            component: () => new About('.main-route'),
         });
     }
 }
