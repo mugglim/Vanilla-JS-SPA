@@ -1,10 +1,57 @@
 import $ from '@/util/dom';
+import _ from '@/util/fp';
 
 const Router = (() => {
     const routes = {};
 
+    const useParams = () => {
+        const { pathname } = window.location;
+        let originRoutePath;
+        let res = {};
+
+        for (const routePath of Object.keys(routes)) {
+            const regex = new RegExp(routePath.replace(/\:\w+/, '\\w+'));
+            const match = pathname.match(regex);
+            if (match && match[0] === pathname) {
+                originRoutePath = routePath;
+                break;
+            }
+        }
+
+        if (originRoutePath) {
+            const paramList = originRoutePath.split('/');
+            const valueList = pathname.split('/');
+
+            for (const [param, value] of _.zip(paramList, valueList)) {
+                if (param.startsWith(':')) {
+                    res[param.substring(1)] = value;
+                }
+            }
+        }
+
+        return res;
+    };
+
+    const getRenderComponent = path => {
+        let renderComponent;
+
+        for (const [routePath, routeRenderComponent] of Object.entries(
+            routes,
+        )) {
+            const regex = new RegExp(routePath.replace(/\:\w+/, '\\w+'));
+            const match = path.match(regex);
+
+            if (match && match[0] === path) {
+                renderComponent = routeRenderComponent;
+                break;
+            }
+        }
+
+        return renderComponent;
+    };
+
     const navigateTo = path => {
-        const renderComponent = routes[path];
+        const renderComponent = getRenderComponent(path);
         history.pushState({ path }, null, path);
         renderComponent();
     };
@@ -15,7 +62,7 @@ const Router = (() => {
 
     const handlePopstate = ({ state }) => {
         const { path } = state;
-        const renderComponent = routes[path];
+        const renderComponent = getRenderComponent(path);
         renderComponent();
     };
 
@@ -29,6 +76,7 @@ const Router = (() => {
         navigateTo,
         handlePopstate,
         initPath,
+        useParams,
     };
 })();
 
