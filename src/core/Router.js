@@ -2,15 +2,16 @@ import $ from '@/util/dom';
 import _ from '@/util/fp';
 
 const Router = (() => {
-    const routes = {};
+    const routes = new Map();
 
     const useParams = () => {
         const { pathname } = window.location;
         let originRoutePath;
         let res = {};
 
-        for (const routePath of Object.keys(routes)) {
-            const regex = new RegExp(routePath.replace(/\:\w+/, '\\w+'));
+        for (const routePath of routes.keys()) {
+            const regex = new RegExp(routePath.replace(/\:\w+/g, '\\w+'));
+
             const match = pathname.match(regex);
             if (match && match[0] === pathname) {
                 originRoutePath = routePath;
@@ -35,9 +36,7 @@ const Router = (() => {
     const getRenderComponent = path => {
         let renderComponent;
 
-        for (const [routePath, routeRenderComponent] of Object.entries(
-            routes,
-        )) {
+        for (const [routePath, routeRenderComponent] of routes.entries()) {
             const regex = new RegExp(routePath.replace(/\:\w+/, '\\w+'));
             const match = path.match(regex);
 
@@ -57,7 +56,7 @@ const Router = (() => {
     };
 
     const subscribe = ({ path, component }) => {
-        routes[path] = component;
+        routes.set(path, component);
     };
 
     const handlePopstate = ({ state }) => {
