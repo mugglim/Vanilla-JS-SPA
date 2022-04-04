@@ -23,13 +23,16 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
 
 ## Scripts
 
-### build
+```bash
+# 1. build
+npm run build
 
-> npm run build
+# 2. run
+npm run dev
 
-### run
-
-> npm run dev
+# 3. visit site
+http://localhost:9000/
+```
 
 ## Demo
 
@@ -54,11 +57,12 @@ React, react-router를 이용하면서 상태관리, 라우팅을 쉽게 구현�
     -   [x] 싱글톤으로 전역 store가 관리된다.
 -   Build
     -   [x] Webpack을 통해 빌드하였다.
-    -   [x] Babel을 통해 ES6+ 문법을 트랜스파일링하였다.
+    -   [x] Babel을 통해 ES6+ 이후 문법을 트랜스파일링 된다.
     -   [ ] core-js를 통해 promise, async, await 같은 문법을 폴리필 하였다.
 -   SPA router
     -   [x] 라우팅 과정에서 새로고침이 발생하지 않는다.
     -   [x] 새로고침을 해도 현재 페이지가 유지된다.
+    -   [x] 동적 라우팅을 적용한다.
 -   httpRequest(optional)
     -   [ ] fetch 함수를 추상화하여 사용한다.
     -   [ ] async/await (then을 사용하지 않는다.)
