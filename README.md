@@ -58,15 +58,20 @@ http://localhost:9000/
 -   Build
     -   [x] Webpack을 통해 빌드하였다.
     -   [x] Babel을 통해 ES6+ 이후 문법을 트랜스파일링 된다.
-    -   [ ] core-js를 통해 promise, async, await 같은 문법을 폴리필 하였다.
+    -   [x] core-js를 통해 promise, async, await 같은 문법을 폴리필 하였다.
 -   SPA router
     -   [x] 라우팅 과정에서 새로고침이 발생하지 않는다.
     -   [x] 새로고침을 해도 현재 페이지가 유지된다.
     -   [x] 동적 라우팅을 적용한다.
+    -   [ ] 라우팅 과정에서 스크롤 위치가 복원된다.
 -   httpRequest(optional)
-    -   [ ] fetch 함수를 추상화하여 사용한다.
-    -   [ ] async/await (then을 사용하지 않는다.)
-    -   [ ] 응답의 요청/실패에 대한 UI처리를 수행한다.
+    -   [x] fetch 함수를 추상화하여 사용한다.
+    -   [x] async/await (then을 사용하지 않는다.)
+    -   [ ] 응답의 요청/실패에 대한 UI처리를 수행한다. => `Toast` 만들어보기
+    -   [ ] 라우팅 과정에서 api 재호출을 방지해본다.
+-   infinite scroll(optional)
+    -   [ ] Intersection Observer을 적용했다.
+    -   [ ]
 -   util(optional)
     -   [ ] debounce, throttling
     -   [ ] functional programming(go, pipe, curry, filter, each)
