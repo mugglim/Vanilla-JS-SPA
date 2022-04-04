@@ -2,7 +2,7 @@ import $ from '@/util/dom';
 import _ from '@/util/fp';
 
 const Router = (() => {
-    const routes = new Map();
+    const routeMap = new Map();
 
     const isUrlPathMatch = (urlPath, regex) => {
         const matchList = urlPath.match(regex);
@@ -31,7 +31,7 @@ const Router = (() => {
     const matchRouthPath = urlPath => {
         let matchedRoutePath;
 
-        for (const routePath of routes.keys()) {
+        for (const routePath of routeMap.keys()) {
             const regex = getRouthPathRegex(routePath);
             if (isUrlPathMatch(urlPath, regex)) {
                 matchedRoutePath = routePath;
@@ -53,7 +53,7 @@ const Router = (() => {
     const getRenderComponent = urlPath => {
         let matchedRenderComponent;
 
-        for (const [routePath, renderComponent] of routes.entries()) {
+        for (const [routePath, renderComponent] of routeMap.entries()) {
             const regex = getRouthPathRegex(routePath);
             if (isUrlPathMatch(urlPath, regex)) {
                 matchedRenderComponent = renderComponent;
@@ -71,7 +71,7 @@ const Router = (() => {
     };
 
     const subscribe = ({ path, component }) => {
-        routes.set(path, component);
+        routeMap.set(path, component);
     };
 
     const handlePopstate = ({ state }) => {
