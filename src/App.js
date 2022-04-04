@@ -28,7 +28,7 @@ export default class App extends Veact {
             component: () => new About('.main-route'),
         });
         Router.subscribe({
-            path: '/products/:id',
+            path: '/post/:id',
             component: () => new PostDetail('.main-route'),
         });
     }

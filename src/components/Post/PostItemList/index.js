@@ -35,12 +35,16 @@ export default class PostItemList extends Veact {
     willMount() {
         const handleProductItemClick = ({ target }) => {
             const { idx } = target.dataset;
-            Router.navigateTo(`/products/${idx}`);
+            Router.navigateTo(`/post/${idx}`);
         };
 
         _.each(
             this.$target,
-            $.delegate('.post-feed__list', 'click', handleProductItemClick),
+            $.delegate(
+                '.post-feed__list__item',
+                'click',
+                handleProductItemClick,
+            ),
         );
     }
 }

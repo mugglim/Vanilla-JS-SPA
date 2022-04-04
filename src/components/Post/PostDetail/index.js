@@ -10,7 +10,8 @@ export default class PostDetail extends Veact {
     template() {
         const { id } = Router.useParams();
         return `
-            상품의 상세 사이트입니다. 상품 번호는 ${id} 이네요.
+            <h1>PostDetail</h1>
+            <h3>Post ID : ${id}</h3>    
         `;
     }
 }
