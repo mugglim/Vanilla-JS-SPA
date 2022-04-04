@@ -4,49 +4,64 @@ import _ from '@/util/fp';
 const Router = (() => {
     const routes = new Map();
 
-    const useParams = () => {
-        const { pathname } = window.location;
-        let originRoutePath;
-        let res = {};
-
-        for (const routePath of routes.keys()) {
-            const regex = new RegExp(routePath.replace(/\:\w+/g, '\\w+'));
-
-            const match = pathname.match(regex);
-            if (match && match[0] === pathname) {
-                originRoutePath = routePath;
-                break;
-            }
-        }
-
-        if (originRoutePath) {
-            const paramList = originRoutePath.split('/');
-            const valueList = pathname.split('/');
-
-            for (const [param, value] of _.zip(paramList, valueList)) {
-                if (param.startsWith(':')) {
-                    res[param.substring(1)] = value;
-                }
-            }
-        }
-
-        return res;
+    const isUrlPathMatch = (urlPath, regex) => {
+        const matchList = urlPath.match(regex);
+        return matchList && matchList[0] === urlPath;
     };
 
-    const getRenderComponent = path => {
-        let renderComponent;
+    const getRouthPathRegex = routePath => {
+        return new RegExp(routePath.replace(/\:\w+/g, '\\w+'));
+    };
 
-        for (const [routePath, routeRenderComponent] of routes.entries()) {
-            const regex = new RegExp(routePath.replace(/\:\w+/, '\\w+'));
-            const match = path.match(regex);
+    const parseParam = (routhPath, urlPath) => {
+        if (!urlPath) return {};
 
-            if (match && match[0] === path) {
-                renderComponent = routeRenderComponent;
+        const paramList = routhPath.split('/');
+        const valueList = urlPath.split('/');
+
+        return _.zip(paramList, valueList)
+            .filter(([param]) => param.startsWith(':'))
+            .map(([param, value]) => [param.substring(1), value])
+            .reduce((paramObj, [paramKey, value]) => {
+                paramObj[paramKey] = value;
+                return paramObj;
+            }, {});
+    };
+
+    const matchRouthPath = urlPath => {
+        let matchedRoutePath;
+
+        for (const routePath of routes.keys()) {
+            const regex = getRouthPathRegex(routePath);
+            if (isUrlPathMatch(urlPath, regex)) {
+                matchedRoutePath = routePath;
                 break;
             }
         }
 
-        return renderComponent;
+        return matchedRoutePath;
+    };
+
+    const useParams = () => {
+        const { pathname } = window.location;
+        const routhPath = matchRouthPath(pathname);
+        const paramObj = parseParam(routhPath, pathname);
+
+        return paramObj;
+    };
+
+    const getRenderComponent = urlPath => {
+        let matchedRenderComponent;
+
+        for (const [routePath, renderComponent] of routes.entries()) {
+            const regex = getRouthPathRegex(routePath);
+            if (isUrlPathMatch(urlPath, regex)) {
+                matchedRenderComponent = renderComponent;
+                break;
+            }
+        }
+
+        return matchedRenderComponent;
     };
 
     const navigateTo = path => {
