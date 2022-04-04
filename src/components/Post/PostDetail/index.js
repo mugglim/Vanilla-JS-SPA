@@ -1,7 +1,7 @@
 import Veact from '@/core/Veact';
 import Router from '@/core/Router';
 
-export default class ProductDetail extends Veact {
+export default class PostDetail extends Veact {
     constructor($target, props) {
         super($target, props);
         this.initState({});

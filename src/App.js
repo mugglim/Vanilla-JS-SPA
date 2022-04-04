@@ -1,6 +1,6 @@
 import Veact from '@/core/Veact';
 import $ from '@/util/dom';
-import { Header, ProductDetail } from '@/components';
+import { Header, PostDetail } from '@/components';
 import { Home, About } from '@/pages';
 import Router from '@/core/Router';
 
@@ -29,7 +29,7 @@ export default class App extends Veact {
         });
         Router.subscribe({
             path: '/products/:id',
-            component: () => new ProductDetail('.main-route'),
+            component: () => new PostDetail('.main-route'),
         });
     }
 }

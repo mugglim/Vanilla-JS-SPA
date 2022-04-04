@@ -1,3 +1,3 @@
 export { default as Header } from './Header';
-export { default as ProductItemList } from './Product/ProductItemList';
-export { default as ProductDetail } from './Product/ProductDetail';
+export { default as PostItemList } from './Post/PostItemList';
+export { default as PostDetail } from './Post/PostDetail';

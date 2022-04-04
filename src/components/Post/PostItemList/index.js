@@ -1,12 +1,11 @@
 import Veact from '@/core/Veact';
 import Router from '@/core/Router';
-import ProductItem from '../ProductItem';
+import PostItem from '../PostItem';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
-
 import './index.scss';
 
-export default class ProductItemList extends Veact {
+export default class PostItemList extends Veact {
     constructor($target, props) {
         super($target, props);
         this.initState({});
@@ -14,18 +13,20 @@ export default class ProductItemList extends Veact {
 
     template() {
         return `
-            ${this.props.map(
-                item =>
-                    `<div class="product-item-list__item" data-idx="${item.id}"></div>`,
-            )}
+            ${this.props
+                .map(
+                    item =>
+                        `<div class="post-feed__list__item" data-idx="${item.id}"></div>`,
+                )
+                .join('')}
         `;
     }
 
-    didMount() {
+    async didMount() {
         this.props.forEach(
             item =>
-                new ProductItem(
-                    `.product-item-list__item[data-idx='${item.id}']`,
+                new PostItem(
+                    `.post-feed__list__item[data-idx='${item.id}']`,
                     item,
                 ),
         );
@@ -39,11 +40,7 @@ export default class ProductItemList extends Veact {
 
         _.each(
             this.$target,
-            $.delegate(
-                '.product-item-list__item',
-                'click',
-                handleProductItemClick,
-            ),
+            $.delegate('.post-feed__list', 'click', handleProductItemClick),
         );
     }
 }
