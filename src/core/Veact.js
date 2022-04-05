@@ -4,7 +4,6 @@ export default class Veact {
     constructor($target, props = null) {
         this.$target = $.find($target);
         this.props = props;
-        this.isMounted = false;
     }
 
     initState(initalState) {
@@ -14,26 +13,20 @@ export default class Veact {
 
     setState(newState) {
         this.state = { ...this.state, ...newState };
-        this.update();
+        this.mount();
     }
 
     mount() {
-        if (!this.isMounted) {
-            this.isMounted = true;
-            this.willMount();
-        }
         this.render();
         this.didMount();
     }
 
-    template() {
-        return ``;
-    }
+    template() {}
+
     render() {
         this.$target.innerHTML = this.template();
     }
 
-    willMount() {}
     didMount() {}
 
     update() {

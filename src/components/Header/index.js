@@ -16,7 +16,7 @@ export default class Counter extends Veact {
         `;
     }
 
-    willMount() {
+    didMount() {
         const handleNavClick = ({ target }) => {
             const navHref = target.getAttribute('href');
             Router.navigateTo(navHref);

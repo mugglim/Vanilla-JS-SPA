@@ -7,23 +7,27 @@ import './index.scss';
 export default class PostItemList extends Veact {
     constructor($target, props) {
         super($target, props);
-        this.initState({});
+        this.initState();
     }
 
     template() {
         const { postList } = this.props;
         const renderPostItem = ({ id, title, body }) => {
-            return `<div class="post-feed__list__item" data-idx="${id}">
-                <div><b>post-id</b> : ${id}</div>
-                <div><b>title</b> : ${title}</div>
-                <div><b>body</b> : ${body}</div>
-            </div>`;
+            return `
+                <div class="post-feed__list__item" data-idx="${id}">
+                    <div><b>post-id</b> : ${id}</div>
+                    <div><b>title</b> : ${title}</div>
+                    <div><b>body</b> : ${body}</div>
+                </div>
+            `;
         };
 
-        return `${postList.map(renderPostItem).join('')}`;
+        return `
+            ${postList.map(renderPostItem).join('')}
+        `;
     }
 
-    willMount() {
+    didMount() {
         const handleProductItemClick = ({ target }) => {
             const { idx } = target.dataset;
             Router.navigateTo(`/post/${idx}`);
