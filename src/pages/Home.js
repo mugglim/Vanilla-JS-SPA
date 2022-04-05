@@ -18,6 +18,6 @@ export default class extends Veact {
     async didMount() {
         const postList = await getPost();
 
-        new PostItemList('.post-feed__list', postList);
+        new PostItemList('.post-feed__list', { postList });
     }
 }

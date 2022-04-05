@@ -1,6 +1,5 @@
 import Veact from '@/core/Veact';
 import Router from '@/core/Router';
-import PostItem from '../PostItem';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
 import './index.scss';
@@ -12,24 +11,16 @@ export default class PostItemList extends Veact {
     }
 
     template() {
-        return `
-            ${this.props
-                .map(
-                    item =>
-                        `<div class="post-feed__list__item" data-idx="${item.id}"></div>`,
-                )
-                .join('')}
-        `;
-    }
+        const { postList } = this.props;
+        const renderPostItem = ({ id, title, body }) => {
+            return `<div class="post-feed__list__item" data-idx="${id}">
+                <div><b>post-id</b> : ${id}</div>
+                <div><b>title</b> : ${title}</div>
+                <div><b>body</b> : ${body}</div>
+            </div>`;
+        };
 
-    async didMount() {
-        this.props.forEach(
-            item =>
-                new PostItem(
-                    `.post-feed__list__item[data-idx='${item.id}']`,
-                    item,
-                ),
-        );
+        return `${postList.map(renderPostItem).join('')}`;
     }
 
     willMount() {
