@@ -2,7 +2,7 @@ import Veact from '@/core/Veact';
 import $ from '@/util/dom';
 import { Header, PostDetail } from '@/components';
 import { Home, About } from '@/pages';
-import Router from '@/core/Router';
+import { Router } from '@/core/Router';
 
 export default class App extends Veact {
     constructor($target, props) {
@@ -20,7 +20,7 @@ export default class App extends Veact {
     didMount() {
         new Header('.nav');
 
-        const routes = [
+        const routeList = [
             {
                 path: '/',
                 Component: () => new Home('.main-route'),
@@ -35,11 +35,7 @@ export default class App extends Veact {
             },
         ];
 
-        routes.forEach(({ path, Component }) =>
-            Router.subscribe({ path, Component }),
-        );
-
-        // 메인 페이지로 이동
-        Router.navigateTo('/');
+        Router.subscribe(routeList);
+        Router.navigateTo('/'); // 등록 후 메인 페이지로 이동
     }
 }

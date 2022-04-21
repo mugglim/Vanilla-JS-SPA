@@ -1,7 +1,7 @@
 import Veact from '@/core/Veact';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
-import Router from '@/core/Router';
+import { Router } from '@/core/Router';
 
 export default class Counter extends Veact {
     constructor($target) {

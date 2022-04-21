@@ -1,8 +1,10 @@
 export default (() => {
     const routeMap = new Map();
 
-    const subscribe = ({ path, Component }) => {
-        routeMap.set(path, Component);
+    const subscribe = routeList => {
+        routeList.forEach(({ path, Component }) => {
+            routeMap.set(path, Component);
+        });
     };
 
     const regexOf = routePathName => {

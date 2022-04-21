@@ -1,5 +1,5 @@
 import Veact from '@/core/Veact';
-import Router from '@/core/Router';
+import { Router } from '@/core/Router';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
 import './index.scss';

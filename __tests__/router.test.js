@@ -1,7 +1,11 @@
-import Router from '../src/core/Router.js';
+import { Router } from '@/core/Router';
 
-Router.subscribe({ path: '/products/:id', component: null });
-Router.subscribe({ path: '/products/:id/:category', component: null });
+const ROUTE_LIST = [
+    { path: '/products/:id', component: null },
+    { path: '/products/:id/:category', component: null },
+];
+
+Router.subscribe(ROUTE_LIST);
 
 describe('useParams는 등록된 경로에서 param 값을 파싱한다', () => {
     beforeEach(() => {

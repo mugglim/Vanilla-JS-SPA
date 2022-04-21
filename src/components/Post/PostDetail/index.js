@@ -1,5 +1,5 @@
 import Veact from '@/core/Veact';
-import Router from '@/core/Router';
+import { Router } from '@/core/Router';
 
 export default class PostDetail extends Veact {
     constructor($target, props) {
