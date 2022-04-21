@@ -1,9 +1,9 @@
-import Veact from '@/core/Veact';
+import { Component } from '@/core/Component';
 
-export default class extends Veact {
+export default class extends Component {
     constructor($target) {
         super($target);
-        this.initState({});
+        this.setup();
     }
 
     template() {

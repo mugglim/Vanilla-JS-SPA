@@ -1,10 +1,10 @@
-import Veact from '@/core/Veact';
+import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
 
-export default class PostDetail extends Veact {
+export default class PostDetail extends Component {
     constructor($target, props) {
         super($target, props);
-        this.initState({});
+        this.setup();
     }
 
     template() {

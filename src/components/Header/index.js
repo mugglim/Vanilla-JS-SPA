@@ -1,12 +1,12 @@
-import Veact from '@/core/Veact';
+import { Component } from '@/core/Component';
+import { Router } from '@/core/Router';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
-import { Router } from '@/core/Router';
 
-export default class Counter extends Veact {
+export default class Counter extends Component {
     constructor($target) {
         super($target);
-        this.initState({});
+        this.setup();
     }
 
     template() {
@@ -16,7 +16,7 @@ export default class Counter extends Veact {
         `;
     }
 
-    didMount() {
+    setEvent() {
         const handleNavClick = ({ target }) => {
             const navHref = target.getAttribute('href');
             Router.navigateTo(navHref);

@@ -1,13 +1,13 @@
-import Veact from '@/core/Veact';
+import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
 import _ from '@/util/fp';
 import $ from '@/util/dom';
 import './index.scss';
 
-export default class PostItemList extends Veact {
+export default class PostItemList extends Component {
     constructor($target, props) {
         super($target, props);
-        this.initState();
+        this.setup();
     }
 
     template() {

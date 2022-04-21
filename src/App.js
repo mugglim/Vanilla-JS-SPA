@@ -1,13 +1,13 @@
-import Veact from '@/core/Veact';
-import $ from '@/util/dom';
+import { Component } from '@/core/Component';
+import { Router } from '@/core/Router';
 import { Header, PostDetail } from '@/components';
 import { Home, About } from '@/pages';
-import { Router } from '@/core/Router';
+import $ from '@/util/dom';
 
-export default class App extends Veact {
+export default class App extends Component {
     constructor($target, props) {
         super($target, props);
-        this.initState({});
+        this.setup();
     }
 
     template() {
