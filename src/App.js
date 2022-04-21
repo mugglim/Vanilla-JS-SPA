@@ -19,17 +19,27 @@ export default class App extends Veact {
 
     didMount() {
         new Header('.nav');
-        Router.subscribe({
-            path: '/',
-            component: () => new Home('.main-route'),
-        });
-        Router.subscribe({
-            path: '/about',
-            component: () => new About('.main-route'),
-        });
-        Router.subscribe({
-            path: '/post/:id',
-            component: () => new PostDetail('.main-route'),
-        });
+
+        const routes = [
+            {
+                path: '/',
+                Component: () => new Home('.main-route'),
+            },
+            {
+                path: '/about',
+                Component: () => new About('.main-route'),
+            },
+            {
+                path: '/post/:id',
+                Component: () => new PostDetail('.main-route'),
+            },
+        ];
+
+        routes.forEach(({ path, Component }) =>
+            Router.subscribe({ path, Component }),
+        );
+
+        // 메인 페이지로 이동
+        Router.navigateTo('/');
     }
 }

@@ -4,7 +4,6 @@ import Router from '@/core/Router';
 
 const handleDomcontentLoaded = () => {
     new App('#root');
-    Router.initPath();
 };
 
 window.addEventListener('DOMContentLoaded', handleDomcontentLoaded);
