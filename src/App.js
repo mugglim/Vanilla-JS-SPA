@@ -3,11 +3,11 @@ import { Router } from '@/core/Router';
 import { Header, PostDetail } from '@/components';
 import { Home, About } from '@/pages';
 
+import { createElement } from './util/element';
+
 export default class App extends Component {
     constructor({ $parent, props }) {
         super({ $parent, props });
-        // header는 공용으로 상단에 배치
-        new Header({ $parent: this.$parent });
         this.setup({});
     }
 
@@ -16,6 +16,7 @@ export default class App extends Component {
     }
 
     didMount() {
+        new Header({ $parent: this.$parent });
         const routeList = [
             {
                 path: '/',

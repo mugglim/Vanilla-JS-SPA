@@ -6,14 +6,7 @@ import './index.scss';
 export default class PostItemList extends Component {
     constructor({ $parent, props }) {
         super({ $parent, props });
-        this.setup({
-            element: {
-                type: 'div',
-                props: {
-                    className: 'post-feed__list',
-                },
-            },
-        });
+        this.setup({ element: `<div class="post-feed__list"></div>` });
     }
 
     template() {

@@ -5,13 +5,7 @@ export default class PostItem extends Component {
     constructor({ $parent, props }) {
         super({ $parent, props });
         this.setup({
-            element: {
-                type: 'div',
-                props: {
-                    className: 'post-feed__list__item',
-                    dataset: { idx: this.props.post.id },
-                },
-            },
+            element: `<div class="post-feed__list__item" data-idx=${this.props.post.id}></div>`,
         });
     }
 

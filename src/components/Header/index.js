@@ -1,12 +1,10 @@
 import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
 
-export default class Counter extends Component {
+export default class Header extends Component {
     constructor({ $parent }) {
         super({ $parent });
-        this.setup({
-            element: { type: 'nav' },
-        });
+        this.setup({ element: '<nav></nav>' });
     }
 
     template() {
@@ -29,13 +27,4 @@ export default class Counter extends Component {
 
         this.$target.addEventListener('click', handleNavLinkClick);
     }
-
-    // setEvent() {
-    //     const handleNavClick = ({ target }) => {
-    //         const navHref = target.getAttribute('href');
-    //         Router.navigateTo(navHref);
-    //     };
-
-    //     _.each(this.$target, $.delegate('.nav__link', 'click', handleNavClick));
-    // }
 }

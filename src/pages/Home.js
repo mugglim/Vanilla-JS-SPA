@@ -12,7 +12,7 @@ const INTERSECTION_OBSERVE_OPTION = {
     threshold: 0,
 };
 
-export default class extends Component {
+export default class Home extends Component {
     $postLoaderRef;
     $infiniteScrollRef;
 
@@ -49,7 +49,9 @@ export default class extends Component {
             this.$infiniteScrollRef.stopObserve(this.$postLoaderRef);
         }
 
+        new PostLoader({ $parent: this.$parent });
         this.$postLoaderRef = $('.post-loader');
+
         this.$infiniteScrollRef = infiniteScroll({
             callback: this.intersectHandler.bind(this),
             options: INTERSECTION_OBSERVE_OPTION,
@@ -59,7 +61,6 @@ export default class extends Component {
     }
 
     didMount() {
-        new PostLoader({ $parent: this.$parent });
         this.#setInsersectionObserver();
     }
 
@@ -70,7 +71,6 @@ export default class extends Component {
             $parent: this.$parent,
             props: { postList: this.state.postList },
         });
-        new PostLoader({ $parent: this.$parent });
         this.#setInsersectionObserver();
     }
 

@@ -1,3 +1,5 @@
+import { createElement } from '@/util/element';
+
 export default class Component {
     $parent;
     $target;
@@ -10,7 +12,7 @@ export default class Component {
         this.props = props;
     }
 
-    setup({ state = {}, element = {} }) {
+    setup({ state = {}, element = '' }) {
         this.state = state;
         this.#setTargetElement(element);
         this.setState();
@@ -18,31 +20,10 @@ export default class Component {
         this.#setMount();
     }
 
-    #handleSetDataSet(datasetList) {
-        if (!this.$target) return;
+    #setTargetElement(element) {
+        if (!element) return;
 
-        Object.entries(datasetList).forEach(([attribute, value]) => {
-            this.$target.dataset[attribute] = value;
-        });
-    }
-
-    #handleSetAttribute(props) {
-        if (!this.$target || !props) return;
-
-        Object.entries(props).forEach(([attribute, value]) => {
-            if (attribute === 'dataset') {
-                this.#handleSetDataSet(value);
-                return;
-            }
-            this.$target[attribute] = value;
-        });
-    }
-
-    #setTargetElement({ type, props }) {
-        if (!type) return;
-
-        this.$target = document.createElement(type);
-        this.#handleSetAttribute(props);
+        this.$target = createElement(element);
         this.$parent.appendChild(this.$target);
     }
 
