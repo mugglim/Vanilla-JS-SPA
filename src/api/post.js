@@ -1,16 +1,9 @@
 import { JSON_PLACEHOLDER_BASE_URL as BASE_URL } from '../constatns/url';
-import { fetchHelper } from '../util/api';
+import Fetcher from '@/util/Fetcher';
 
-export async function getPost(params = {}) {
-    try {
-        const data = await fetchHelper({
-            baseURL: BASE_URL,
-            params,
-            url: '/posts',
-        });
+const instance = new Fetcher({ baseURL: BASE_URL });
 
-        return data;
-    } catch (e) {
-        alert('post 조회 실패');
-    }
-}
+export const getPostList = async ({ params }) => {
+    const data = await instance.get({ url: '/posts', params });
+    return data;
+};

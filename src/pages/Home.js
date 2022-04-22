@@ -1,5 +1,5 @@
 import { Component } from '@/core/Component';
-import { getPost } from '@/api/post';
+import { getPostList } from '@/api/post';
 import { PostItemList } from '@/components';
 import PostLoader from '@/components/Post/PostLoader';
 import infiniteScroll from '../util/infiniteScroll';
@@ -25,9 +25,11 @@ export default class Home extends Component {
     }
 
     async handleFetchPost() {
-        const postList = await getPost({
-            _start: this.state.startPostIdx,
-            _limit: POST_LIMIT,
+        const postList = await getPostList({
+            params: {
+                _start: this.state.startPostIdx,
+                _limit: POST_LIMIT,
+            },
         });
 
         const postCount = postList.length;
