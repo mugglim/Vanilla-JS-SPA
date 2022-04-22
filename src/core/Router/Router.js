@@ -1,10 +1,9 @@
 export default (() => {
     const routeMap = new Map();
 
-    const subscribe = routeList => {
-        routeList.forEach(({ path, Component }) => {
-            routeMap.set(path, Component);
-        });
+    const subscribe = ({ path, Component }) => {
+        if (routeMap.has(path)) return;
+        routeMap.set(path, Component);
     };
 
     const regexOf = routePathName => {

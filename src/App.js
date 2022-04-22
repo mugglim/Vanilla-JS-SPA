@@ -1,8 +1,7 @@
 import { Component } from '@/core/Component';
-import { Router } from '@/core/Router';
+import { Routes, Router } from '@/core/Router';
 import { Header, PostDetail } from '@/components';
 import { Home, About } from '@/pages';
-
 import { createElement } from './util/element';
 
 export default class App extends Component {
@@ -16,22 +15,13 @@ export default class App extends Component {
     }
 
     didMount() {
-        new Header({ $parent: this.$parent });
-        const routeList = [
-            {
-                path: '/',
-                Component: () => new Home({ $parent: this.$parent }),
-            },
-            {
-                path: '/about',
-                Component: () => new About({ $parent: this.$parent }),
-            },
-            {
-                path: '/post/:id',
-                Component: () => new PostDetail({ $parent: this.$parent }),
-            },
+        const routes = [
+            { path: '/', Component: Home },
+            { path: '/about', Component: About },
+            { path: '/post/:id', Component: PostDetail },
         ];
-        Router.subscribe(routeList);
+
+        new Routes({ $parent: this.$parent, routes, Header });
         Router.navigateTo('/'); // 등록 후 메인 페이지로 이동
     }
 }

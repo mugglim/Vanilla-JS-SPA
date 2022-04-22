@@ -4,7 +4,9 @@ import { Router } from '@/core/Router';
 export default class PostDetail extends Component {
     constructor({ $parent }) {
         super({ $parent });
-        this.setup({});
+        this.setup({
+            element: `<div class="post__item--detail"></div>`,
+        });
     }
 
     template() {

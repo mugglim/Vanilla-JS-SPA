@@ -18,7 +18,10 @@ export default class Home extends Component {
 
     constructor({ $parent }) {
         super({ $parent });
-        this.setup({ state: { startPostIdx: 0, postList: [] } });
+        this.setup({
+            element: `<div class="home"></div>`,
+            state: { startPostIdx: 0, postList: [] },
+        });
     }
 
     async handleFetchPost() {
@@ -49,7 +52,7 @@ export default class Home extends Component {
             this.$infiniteScrollRef.stopObserve(this.$postLoaderRef);
         }
 
-        new PostLoader({ $parent: this.$parent });
+        new PostLoader({ $parent: this.$target });
         this.$postLoaderRef = $('.post-loader');
 
         this.$infiniteScrollRef = infiniteScroll({
@@ -68,7 +71,7 @@ export default class Home extends Component {
         if (!this.state.postList.length) return;
 
         new PostItemList({
-            $parent: this.$parent,
+            $parent: this.$target,
             props: { postList: this.state.postList },
         });
         this.#setInsersectionObserver();
