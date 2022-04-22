@@ -3,7 +3,20 @@ import Fetcher from '@/util/Fetcher';
 
 const instance = new Fetcher({ baseURL: BASE_URL });
 
+export const getPost = async ({ postId }) => {
+    try {
+        const data = await instance.get({ url: `/posts/${postId}` });
+        return data;
+    } catch (err) {
+        alert('Post 목록 조회 실패');
+    }
+};
+
 export const getPostList = async ({ params }) => {
-    const data = await instance.get({ url: '/posts', params });
-    return data;
+    try {
+        const data = await instance.get({ url: '/posts', params });
+        return data;
+    } catch (err) {
+        alert('PostDetail 조회 실패');
+    }
 };
