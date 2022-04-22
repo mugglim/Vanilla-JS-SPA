@@ -1,21 +1,49 @@
-import $ from '@/util/dom';
-
 export default class Component {
+    $parent;
     $target;
     props;
     state;
     isMount = false;
 
-    constructor($target, props = null) {
-        this.$target = $.find($target);
+    constructor({ $parent, $target, props = null }) {
+        this.$parent = $parent;
         this.props = props;
     }
 
-    setup(initalState) {
-        this.state = initalState;
+    setup({ state = {}, element = {} }) {
+        this.state = state;
+        this.#setTargetElement(element);
         this.setState();
         this.didMount();
         this.#setMount();
+    }
+
+    #handleSetDataSet(datasetList) {
+        if (!this.$target) return;
+
+        Object.entries(datasetList).forEach(([attribute, value]) => {
+            this.$target.dataset[attribute] = value;
+        });
+    }
+
+    #handleSetAttribute(props) {
+        if (!this.$target || !props) return;
+
+        Object.entries(props).forEach(([attribute, value]) => {
+            if (attribute === 'dataset') {
+                this.#handleSetDataSet(value);
+                return;
+            }
+            this.$target[attribute] = value;
+        });
+    }
+
+    #setTargetElement({ type, props }) {
+        if (!type) return;
+
+        this.$target = document.createElement(type);
+        this.#handleSetAttribute(props);
+        this.$parent.appendChild(this.$target);
     }
 
     #setMount() {
@@ -41,6 +69,11 @@ export default class Component {
     }
 
     render() {
+        if (!this.$target) {
+            this.$parent.innerHTML = this.template();
+            return;
+        }
+
         this.$target.innerHTML = this.template();
     }
 }

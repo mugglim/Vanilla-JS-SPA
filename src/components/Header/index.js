@@ -1,12 +1,12 @@
 import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
-import _ from '@/util/fp';
-import $ from '@/util/dom';
 
 export default class Counter extends Component {
-    constructor($target) {
-        super($target);
-        this.setup();
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({
+            element: { type: 'nav' },
+        });
     }
 
     template() {
@@ -17,11 +17,25 @@ export default class Counter extends Component {
     }
 
     setEvent() {
-        const handleNavClick = ({ target }) => {
-            const navHref = target.getAttribute('href');
-            Router.navigateTo(navHref);
+        const handleNavLinkClick = event => {
+            event.preventDefault();
+
+            const $navLink = event.target.closest('.nav__link');
+            if (!$navLink) return;
+
+            const href = $navLink.getAttribute('href');
+            Router.navigateTo(href);
         };
 
-        _.each(this.$target, $.delegate('.nav__link', 'click', handleNavClick));
+        this.$target.addEventListener('click', handleNavLinkClick);
     }
+
+    // setEvent() {
+    //     const handleNavClick = ({ target }) => {
+    //         const navHref = target.getAttribute('href');
+    //         Router.navigateTo(navHref);
+    //     };
+
+    //     _.each(this.$target, $.delegate('.nav__link', 'click', handleNavClick));
+    // }
 }

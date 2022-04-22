@@ -1,18 +1,24 @@
 import { Component } from '@/core/Component';
-import $ from '@/util/dom';
 import { getPost } from '@/api/post';
 import { PostItemList } from '@/components';
+import PostLoader from '@/components/Post/PostLoader';
 import infiniteScroll from '../util/infiniteScroll';
+import { $ } from '@/util/selector';
 
 const POST_LIMIT = 10;
+const INTERSECTION_OBSERVE_OPTION = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+};
 
 export default class extends Component {
     $postLoaderRef;
     $infiniteScrollRef;
 
-    constructor($target) {
-        super($target);
-        this.setup({ startPostIdx: 0, postList: [] });
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({ state: { startPostIdx: 0, postList: [] } });
     }
 
     async handleFetchPost() {
@@ -20,6 +26,7 @@ export default class extends Component {
             _start: this.state.startPostIdx,
             _limit: POST_LIMIT,
         });
+
         const postCount = postList.length;
 
         if (postCount === 0) return;
@@ -38,36 +45,38 @@ export default class extends Component {
     }
 
     #setInsersectionObserver() {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0,
-        };
+        if (this.$infiniteScrollRef) {
+            this.$infiniteScrollRef.stopObserve(this.$postLoaderRef);
+        }
 
-        this.$postLoaderRef = $.find('.post-loader');
+        this.$postLoaderRef = $('.post-loader');
         this.$infiniteScrollRef = infiniteScroll({
             callback: this.intersectHandler.bind(this),
-            options,
+            options: INTERSECTION_OBSERVE_OPTION,
             target: this.$postLoaderRef,
         });
         this.$infiniteScrollRef.startObserve();
     }
 
     didMount() {
+        new PostLoader({ $parent: this.$parent });
         this.#setInsersectionObserver();
     }
 
     didUpdate() {
         if (!this.state.postList.length) return;
-        new PostItemList('.post-feed__list', { postList: this.state.postList });
+
+        new PostItemList({
+            $parent: this.$parent,
+            props: { postList: this.state.postList },
+        });
+        new PostLoader({ $parent: this.$parent });
         this.#setInsersectionObserver();
     }
 
     template() {
         return `
             <h1>Home</h1>
-            <div class="post-feed__list"></div>
-            <div class="post-loader"></div>
         `;
     }
 }

@@ -1,45 +1,44 @@
 import { Component } from '@/core/Component';
+import PostItem from '../PostItem';
 import { Router } from '@/core/Router';
-import _ from '@/util/fp';
-import $ from '@/util/dom';
 import './index.scss';
 
 export default class PostItemList extends Component {
-    constructor($target, props) {
-        super($target, props);
-        this.setup();
+    constructor({ $parent, props }) {
+        super({ $parent, props });
+        this.setup({
+            element: {
+                type: 'div',
+                props: {
+                    className: 'post-feed__list',
+                },
+            },
+        });
     }
 
     template() {
-        const { postList } = this.props;
-        const renderPostItem = ({ id, title, body }) => {
-            return `
-                <div class="post-feed__list__item" data-idx="${id}">
-                    <div><b>post-id</b> : ${id}</div>
-                    <div><b>title</b> : ${title}</div>
-                    <div><b>body</b> : ${body}</div>
-                </div>
-            `;
-        };
-
-        return `
-            ${postList.map(renderPostItem).join('')}
-        `;
+        return '';
     }
 
     didMount() {
+        if (!this.props) return;
+
+        const { postList } = this.props;
+
+        postList.forEach(
+            post => new PostItem({ $parent: this.$target, props: { post } }),
+        );
+    }
+
+    setEvent() {
         const handleProductItemClick = ({ target }) => {
-            const { idx } = target.dataset;
-            Router.navigateTo(`/post/${idx}`);
+            const $postItem = target.closest('.post-feed__list__item');
+            if (!$postItem) return;
+
+            const postId = $postItem.dataset.idx;
+            Router.navigateTo(`/post/${postId}`);
         };
 
-        _.each(
-            this.$target,
-            $.delegate(
-                '.post-feed__list__item',
-                'click',
-                handleProductItemClick,
-            ),
-        );
+        this.$target.addEventListener('click', handleProductItemClick);
     }
 }

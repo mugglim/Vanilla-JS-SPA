@@ -2,9 +2,9 @@ import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
 
 export default class PostDetail extends Component {
-    constructor($target, props) {
-        super($target, props);
-        this.setup();
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({});
     }
 
     template() {

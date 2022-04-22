@@ -1,10 +1,8 @@
 import App from './App';
-import $ from './util/dom';
 import { Router } from '@/core/Router';
+import { $ } from '@/util/selector';
 
-const handleDomcontentLoaded = () => {
-    new App('#root');
-};
+const handleDomcontentLoaded = () => new App({ $parent: $('#root') });
 
 window.addEventListener('DOMContentLoaded', handleDomcontentLoaded);
 window.addEventListener('popstate', Router.handlePopstate);
