@@ -23,15 +23,18 @@ export default class PostItemList extends Component {
         );
     }
 
+    handleProductItemClick(event) {
+        console.log(event);
+        const $postItem = event.target.closest('.post-feed__list__item');
+        if (!$postItem) return;
+
+        const postId = $postItem.dataset.idx;
+        Router.navigateTo(`/post/${postId}`);
+    }
+
     setEvent() {
-        const handleProductItemClick = ({ target }) => {
-            const $postItem = target.closest('.post-feed__list__item');
-            if (!$postItem) return;
-
-            const postId = $postItem.dataset.idx;
-            Router.navigateTo(`/post/${postId}`);
-        };
-
-        this.$target.addEventListener('click', handleProductItemClick);
+        return [
+            ['.post-feed__list__item', 'click', this.handleProductItemClick],
+        ];
     }
 }

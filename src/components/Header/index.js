@@ -10,21 +10,17 @@ export default class Header extends Component {
     template() {
         return `
             <a class="nav__link" href="/">Home</a>
-            <a class="nav__link" href="/about">About</a>
+            <a class="nav__link" href="/counter">counter</a>
         `;
     }
 
+    handleNavLinkClick(event) {
+        event.preventDefault();
+        const href = event.target.getAttribute('href');
+        Router.navigateTo(href);
+    }
+
     setEvent() {
-        const handleNavLinkClick = event => {
-            event.preventDefault();
-
-            const $navLink = event.target.closest('.nav__link');
-            if (!$navLink) return;
-
-            const href = $navLink.getAttribute('href');
-            Router.navigateTo(href);
-        };
-
-        this.$target.addEventListener('click', handleNavLinkClick);
+        return [['.nav__link', 'click', this.handleNavLinkClick]];
     }
 }

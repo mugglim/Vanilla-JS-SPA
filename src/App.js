@@ -1,7 +1,7 @@
 import { Component } from '@/core/Component';
 import { Routes, Router } from '@/core/Router';
 import { Header, PostDetail } from '@/components';
-import { Home, About } from '@/pages';
+import { HomePage, CounterPage } from '@/pages';
 import { createElement } from './util/element';
 
 export default class App extends Component {
@@ -16,8 +16,8 @@ export default class App extends Component {
 
     didMount() {
         const routes = [
-            { path: '/', Component: Home },
-            { path: '/about', Component: About },
+            { path: '/', Component: HomePage },
+            { path: '/counter', Component: CounterPage },
             { path: '/post/:id', Component: PostDetail },
         ];
 

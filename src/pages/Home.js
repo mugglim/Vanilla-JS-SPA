@@ -12,7 +12,7 @@ const INTERSECTION_OBSERVE_OPTION = {
     threshold: 0,
 };
 
-export default class Home extends Component {
+export default class extends Component {
     $postLoaderRef;
     $infiniteScrollRef;
 
