@@ -24,7 +24,6 @@ export default class PostItemList extends Component {
     }
 
     handleProductItemClick(event) {
-        console.log(event);
         const $postItem = event.target.closest('.post-feed__list__item');
         if (!$postItem) return;
 
