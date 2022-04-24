@@ -18,7 +18,7 @@ npm run build
 npm run dev
 
 # 3. visit site
-http://localhost:9000/
+http://localhost:3000/
 ```
 
 ## 😀 Demo
