@@ -23,9 +23,111 @@ http://localhost:9000/
 
 ## 😀 Demo
 
-### Global State Management
+### Component
 
-![global-state-management](./images/global-state.gif)
+```js
+import { Component } from '@/core/Component';
+
+class Counter extends Component {
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({
+            state: { count: 0 }, // for inital state
+            element: `<div class="counter"></div>`, // for $target element
+        });
+    }
+
+    onIncrease() {
+        this.setState({ count: this.state.count + 1 });
+    }
+
+    onDecrease() {
+        this.setState({ count: this.state.count - 1 });
+    }
+
+    setEvent() {
+        return [
+            ['.increase__button', 'click', this.onIncrease],
+            ['.decrease__button', 'click', this.onDecrease],
+        ];
+    }
+
+    template() {
+        const { count } = this.state;
+        return `
+            <h1>${count}</h1>
+            <button class="increase__button">+</button>
+            <button class="decrease__button">-</button>
+        `;
+    }
+}
+```
+
+### Routing
+
+#### Routes
+
+```js
+import { Component } from '@/core/Component';
+import { Routes } from '@/core/Router';
+import { Home, TodoDetail } from '@/pages';
+import { Header } from '@/components';
+
+export default class App extends Component {
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({});
+    }
+
+    template() {
+        return ``;
+    }
+
+    didMount() {
+        const routes = [
+            { path: '/', Component: Home },
+            { path: '/todo/:todoId', Component: TodoDetail },
+        ];
+        // using Header Component wtih Routes Component for navgiate
+        new Routes({ $parent: this.$parent, routes, Header });
+    }
+}
+```
+
+#### useParams
+
+```js
+// 2. useParams with dynamic routing
+import { Component } from '@/core/Component';
+import { Router } from '@/core/Router';
+
+export default class TodoDetail extends Component {
+    constructor({ $parent }) {
+        super({ $parent });
+        this.setup({ element: `<div class="todo__item"></div>` });
+    }
+
+    template() {
+        const { title, body } = this.state.todo;
+
+        return `
+            <h1>${title}</h1>
+            <h3>${body}</h3>
+        `;
+    }
+
+    async fetchTodo() {
+        // using param and fetching data
+        const { todoId } = Router.useParams();
+        const todo = await fetch(`/todo/${todoId}`);
+        this.setState({ todo });
+    }
+
+    didMount() {
+        fetchTodo();
+    }
+}
+```
 
 ## ✅ Check List
 
