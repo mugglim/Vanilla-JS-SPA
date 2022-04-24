@@ -10,15 +10,20 @@
 
 ## 💻 Scripts
 
-```bash
-# 1. build
-npm run build
+### run
 
-# 2. run
+```bash
+# 1. run
 npm run dev
 
-# 3. visit site
+# 2. visit site
 http://localhost:3000/
+```
+
+### build
+
+```bash
+npm run build
 ```
 
 ## 😀 Demo
@@ -97,7 +102,6 @@ export default class App extends Component {
 #### useParams
 
 ```js
-// 2. useParams with dynamic routing
 import { Component } from '@/core/Component';
 import { Router } from '@/core/Router';
 
