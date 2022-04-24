@@ -45,6 +45,6 @@ module.exports = {
             directory: buildPath,
         },
         compress: true,
-        port: 9000,
+        port: 3000,
     },
 };
