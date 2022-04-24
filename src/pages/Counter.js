@@ -9,6 +9,7 @@ export default class extends Component {
 
     didMount() {
         new Counter({ $parent: this.$target });
+        new Counter({ $parent: this.$target });
     }
 
     template() {

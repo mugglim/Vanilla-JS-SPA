@@ -1,43 +1,40 @@
-export default (() => {
-    let $root;
-    const subscribedEventMap = new Map();
-    const subscribedEventSet = new Set();
+export default class EventManager {
+    $target;
+    subscribedEventMap = new Map();
+    subscribedEventSet = new Set();
 
-    function createEvent([query, eventType, eventHandler]) {
+    constructor($target) {
+        this.$target = $target;
+    }
+
+    static createEvent([query, eventType, eventHandler]) {
         return { query, eventType, eventHandler: eventHandler.bind(this) };
     }
 
-    const init = initRoot => {
-        if ($root) throw new Error("root element can't be changed");
-        $root = initRoot;
-    };
+    isSusbcribedEventType(eventType) {
+        return this.subscribedEventSet.has(eventType);
+    }
 
-    const isSusbcribedEventType = eventType => {
-        return subscribedEventSet.has(eventType);
-    };
-
-    const subscribe = eventList => {
-        if (!$root | !eventList) return;
+    addEventList(eventList) {
+        if (!this.$target | !eventList) return;
 
         const handleAddEventList = ({ query, eventType, eventHandler }) => {
-            if (!subscribedEventMap.has(eventType)) {
-                subscribedEventMap.set(eventType, new Map());
+            if (!this.subscribedEventMap.has(eventType)) {
+                this.subscribedEventMap.set(eventType, new Map());
             }
 
-            const eventHandlerMap = subscribedEventMap.get(eventType);
+            const eventHandlerMap = this.subscribedEventMap.get(eventType);
             eventHandlerMap.set(query, eventHandler);
         };
 
         const handleSubscribeEvent = (eventHandlerMap, eventType) => {
-            // $root에 등록 된 이벤트 타입 인지 확인.
-            if (isSusbcribedEventType(eventType)) {
+            if (this.isSusbcribedEventType(eventType)) {
                 return;
             }
 
-            // root 엘리먼트에 중복 이벤트 방지를 위해 set에 등록
-            subscribedEventSet.add(eventType);
+            this.subscribedEventSet.add(eventType);
 
-            $root.addEventListener(eventType, event => {
+            this.$target.addEventListener(eventType, event => {
                 const eventHandlerList = Array.from(eventHandlerMap).find(
                     ([query]) => event.target.closest(query),
                 );
@@ -49,12 +46,6 @@ export default (() => {
         };
 
         eventList.forEach(handleAddEventList);
-        subscribedEventMap.forEach(handleSubscribeEvent);
-    };
-
-    return {
-        init,
-        subscribe,
-        createEvent,
-    };
-})();
+        this.subscribedEventMap.forEach(handleSubscribeEvent);
+    }
+}

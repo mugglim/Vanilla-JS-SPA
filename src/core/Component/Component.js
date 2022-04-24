@@ -8,6 +8,7 @@ export default class Component {
     props;
     state;
     isMount = false;
+    eventManager;
 
     constructor({ $parent, $target, props = null }) {
         this.$parent = $parent;
@@ -16,22 +17,21 @@ export default class Component {
 
     setup({ state = {}, element = '' }) {
         this.state = state;
-        this.#setEventDelegate();
         this.#setTargetElement(element);
+        this.#initEventManager();
         this.setState();
         this.didMount();
         this.#setMount();
     }
 
-    #setEventDelegate() {
+    #initEventManager() {
         const eventList = this.setEvent();
-        if (!eventList) return;
+        if (!this.$target || !eventList) return;
 
-        // must be binded this at this time
-        const bindedEventList = eventList.map(
-            EventManager.createEvent.bind(this),
-        );
-        EventManager.subscribe(bindedEventList);
+        this.eventManager = new EventManager(this.$target);
+        const bEventList = eventList.map(EventManager.createEvent.bind(this));
+
+        this.eventManager.addEventList(bEventList);
     }
 
     #setTargetElement(element) {
