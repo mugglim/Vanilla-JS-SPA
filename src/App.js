@@ -2,7 +2,6 @@ import { Component } from '@/core/Component';
 import { Routes, Router } from '@/core/Router';
 import { Header, PostDetail } from '@/components';
 import { HomePage, CounterPage } from '@/pages';
-import { createElement } from './util/element';
 
 export default class App extends Component {
     constructor({ $parent, props }) {
