@@ -1,49 +1,55 @@
 export default (() => {
     let $root;
-    const eventMap = new Map();
+    const subscribedEventMap = new Map();
     const subscribedEventSet = new Set();
+
+    function createEvent([query, eventType, eventHandler]) {
+        return { query, eventType, eventHandler: eventHandler.bind(this) };
+    }
 
     const init = initRoot => {
         if ($root) throw new Error("root element can't be changed");
         $root = initRoot;
     };
 
-    function createEvent([query, eventType, eventHandler]) {
-        return { query, eventType, eventHandler: eventHandler.bind(this) };
-    }
+    const isSusbcribedEventType = eventType => {
+        return subscribedEventSet.has(eventType);
+    };
 
     const subscribe = eventList => {
-        // eventList는 setEvent()를 통해 입력받는다.
         if (!$root | !eventList) return;
 
-        eventList.forEach(({ query, eventType, eventHandler }) => {
-            if (!eventMap.has(eventType)) {
-                eventMap.set(eventType, new Array());
+        const handleAddEventList = ({ query, eventType, eventHandler }) => {
+            if (!subscribedEventMap.has(eventType)) {
+                subscribedEventMap.set(eventType, new Map());
             }
 
-            eventMap.get(eventType).push({ query, eventHandler });
-        });
+            const eventHandlerMap = subscribedEventMap.get(eventType);
+            eventHandlerMap.set(query, eventHandler);
+        };
 
-        eventMap.forEach((eventHandlerList, eventType) => {
-            if (subscribedEventSet.has(eventType)) {
+        const handleSubscribeEvent = (eventHandlerMap, eventType) => {
+            // $root에 등록 된 이벤트 타입 인지 확인.
+            if (isSusbcribedEventType(eventType)) {
                 return;
             }
 
+            // root 엘리먼트에 중복 이벤트 방지를 위해 set에 등록
             subscribedEventSet.add(eventType);
 
             $root.addEventListener(eventType, event => {
-                const target = event.target;
-                const { query, eventHandler } = eventHandlerList.find(
-                    ({ query }) => {
-                        const $closestEl = target.closest(query);
-                        return $closestEl ? true : false;
-                    },
+                const eventHandlerList = Array.from(eventHandlerMap).find(
+                    ([query]) => event.target.closest(query),
                 );
 
-                if (!eventHandler) return;
+                if (!eventHandlerList) return;
+                const [_, eventHandler] = eventHandlerList;
                 eventHandler(event);
             });
-        });
+        };
+
+        eventList.forEach(handleAddEventList);
+        subscribedEventMap.forEach(handleSubscribeEvent);
     };
 
     return {
