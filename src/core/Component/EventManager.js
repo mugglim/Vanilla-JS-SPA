@@ -1,7 +1,6 @@
 export default class EventManager {
     $target;
     subscribedEventMap = new Map();
-    subscribedEventSet = new Set();
 
     constructor($target) {
         this.$target = $target;
@@ -9,10 +8,6 @@ export default class EventManager {
 
     static createEvent([query, eventType, eventHandler]) {
         return { query, eventType, eventHandler: eventHandler.bind(this) };
-    }
-
-    isSusbcribedEventType(eventType) {
-        return this.subscribedEventSet.has(eventType);
     }
 
     addEventList(eventList) {
@@ -28,12 +23,6 @@ export default class EventManager {
         };
 
         const handleSubscribeEvent = (eventHandlerMap, eventType) => {
-            if (this.isSusbcribedEventType(eventType)) {
-                return;
-            }
-
-            this.subscribedEventSet.add(eventType);
-
             this.$target.addEventListener(eventType, event => {
                 const eventHandlerList = Array.from(eventHandlerMap).find(
                     ([query]) => event.target.closest(query),
