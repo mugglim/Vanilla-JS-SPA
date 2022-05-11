@@ -9,13 +9,15 @@ export default class Routes {
     }
 
     init({ Header, routes }) {
-        Object.values(routes).forEach(({ path, Component }) => {
+        const handleRouteSubscribe = ({ path, Component }) => {
             const renderComponent = this.render.bind(this, {
                 Header,
                 Component,
             });
             Router.subscribe({ path, Component: renderComponent });
-        });
+        };
+
+        routes.forEach(handleRouteSubscribe);
     }
 
     render({ Header, Component }) {
