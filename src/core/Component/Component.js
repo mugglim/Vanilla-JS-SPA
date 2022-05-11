@@ -1,6 +1,5 @@
 import EventManager from './EventManager';
 import { createElement } from '@/util/element';
-import { $ } from '@/util/selector';
 
 export default class Component {
     $parent;
@@ -10,7 +9,7 @@ export default class Component {
     isMount = false;
     eventManager;
 
-    constructor({ $parent, $target, props = null }) {
+    constructor({ $parent, props = null }) {
         this.$parent = $parent;
         this.props = props;
     }
