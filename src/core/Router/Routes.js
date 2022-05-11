@@ -9,7 +9,7 @@ export default class Routes {
     }
 
     init({ Header, routes }) {
-        const handleRouteSubscribe = ({ path, Component }) => {
+        const subscribeRoute = ({ path, Component }) => {
             const renderComponent = this.render.bind(this, {
                 Header,
                 Component,
@@ -17,7 +17,7 @@ export default class Routes {
             Router.subscribe({ path, Component: renderComponent });
         };
 
-        routes.forEach(handleRouteSubscribe);
+        routes.forEach(subscribeRoute);
     }
 
     render({ Header, Component }) {

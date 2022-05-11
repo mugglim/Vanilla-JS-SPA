@@ -24,7 +24,7 @@ export default class extends Component {
         });
     }
 
-    async handleFetchPost() {
+    async fetchPost() {
         const postList = await getPostList({
             params: {
                 _start: this.state.startPostIdx,
@@ -45,7 +45,7 @@ export default class extends Component {
     intersectHandler(entries, observer) {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
-            this.handleFetchPost();
+            this.fetchPost();
         });
     }
 

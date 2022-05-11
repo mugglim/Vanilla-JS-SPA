@@ -16,10 +16,10 @@ export default (() => {
             return matchList && matchList[0] === urlPath;
         };
 
-        const handleRoutePathMatch = routePath =>
+        const matchRoute = routePath =>
             isRoutMatch(urlPath, getRegexOfRoutePath(routePath));
 
-        return Array.from(routeMap.keys()).find(handleRoutePathMatch);
+        return Array.from(routeMap.keys()).find(matchRoute);
     };
 
     const getRenderComponent = urlPath => {

@@ -1,6 +1,6 @@
 export default class EventManager {
     $target;
-    subscribedEventMap = new Map();
+    eventInfoMap = new Map();
 
     constructor($target) {
         this.$target = $target;
@@ -10,31 +10,35 @@ export default class EventManager {
         return { query, eventType, eventHandler: eventHandler.bind(this) };
     }
 
-    addEventList(eventList) {
-        if (!this.$target | !eventList) return;
+    addEventList(eventInfoList) {
+        if (!this.$target | !eventInfoList) return;
 
-        const handleAddEventList = ({ query, eventType, eventHandler }) => {
-            if (!this.subscribedEventMap.has(eventType)) {
-                this.subscribedEventMap.set(eventType, new Map());
+        const setEventInfo = ({ query, eventType, eventHandler }) => {
+            if (!this.eventInfoMap.has(eventType)) {
+                this.eventInfoMap.set(eventType, new Map());
             }
 
-            const eventHandlerMap = this.subscribedEventMap.get(eventType);
+            const eventHandlerMap = this.eventInfoMap.get(eventType);
             eventHandlerMap.set(query, eventHandler);
         };
 
-        const handleSubscribeEvent = (eventHandlerMap, eventType) => {
-            this.$target.addEventListener(eventType, event => {
-                const eventHandlerList = Array.from(eventHandlerMap).find(
-                    ([query]) => event.target.closest(query),
-                );
+        const subribeEvent = (eventHandlerMap, eventType) => {
+            const targetQuerys = Array.from(eventHandlerMap.keys());
 
-                if (!eventHandlerList) return;
-                const [_, eventHandler] = eventHandlerList;
-                eventHandler(event);
-            });
+            const eventHandler = event => {
+                const findTargetQuer = query => event.target.closest(query);
+                const targetQuery = targetQuerys.find(findTargetQuer);
+
+                if (!targetQuery) return;
+
+                const targetEventHandler = eventHandlerMap.get(targetQuery);
+                targetEventHandler(event);
+            };
+
+            this.$target.addEventListener(eventType, eventHandler);
         };
 
-        eventList.forEach(handleAddEventList);
-        this.subscribedEventMap.forEach(handleSubscribeEvent);
+        eventInfoList.forEach(setEventInfo);
+        this.eventInfoMap.forEach(subribeEvent);
     }
 }
