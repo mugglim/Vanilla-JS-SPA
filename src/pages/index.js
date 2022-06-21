@@ -1,2 +1,2 @@
-export { default as HomePage } from './Home';
-export { default as CounterPage } from './Counter';
+export { default as Home } from './Home';
+export { default as Project } from './Project';

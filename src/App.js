@@ -1,7 +1,7 @@
 import { Component } from '@/core/Component';
 import { Routes, Router } from '@/core/Router';
-import { Header, PostDetail } from '@/components';
-import { HomePage, CounterPage } from '@/pages';
+import { Header } from '@/components';
+import { Home, Project } from '@/pages';
 
 export default class App extends Component {
     constructor({ $parent, props }) {
@@ -15,9 +15,8 @@ export default class App extends Component {
 
     didMount() {
         const routes = [
-            { path: '/', Component: HomePage },
-            { path: '/counter', Component: CounterPage },
-            { path: '/post/:id', Component: PostDetail },
+            { path: '/', Component: Home },
+            { path: '/project', Component: Project },
         ];
 
         new Routes({ $parent: this.$parent, routes, Header });

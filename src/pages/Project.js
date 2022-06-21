@@ -1,10 +1,10 @@
 import { Component } from '@/core/Component';
 import Counter from '@/components/Counter';
 
-export default class extends Component {
+export default class Project extends Component {
     constructor({ $parent }) {
         super({ $parent });
-        this.setup({ element: `<div class="counter"></div>` });
+        this.setup({ element: '<div>' });
     }
 
     didMount() {
@@ -13,6 +13,6 @@ export default class extends Component {
     }
 
     template() {
-        return `<h1>Counter App</h1>`;
+        return `<h1>Project</h1>`;
     }
 }

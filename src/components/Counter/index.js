@@ -27,8 +27,9 @@ export default class Counter extends Component {
     template() {
         const { count } = this.state;
         return `
-            <h1>${count}</h1>
+            <h3>Simple Counter</h3>
             <button class="increase__button">+</button>
+            <span>${count}</span>
             <button class="decrease__button">-</button>
         `;
     }

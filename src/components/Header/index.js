@@ -10,7 +10,7 @@ export default class Header extends Component {
     template() {
         return `
             <a class="nav__link" href="/">Home</a>
-            <a class="nav__link" href="/counter">counter</a>
+            <a class="nav__link" href="/project">Project</a>
         `;
     }
 
