@@ -1,4 +1,5 @@
 import EventManager from './EventManager';
+import { $ } from '@/util/selector';
 import { createElement } from '@/util/element';
 
 export default class Component {
@@ -42,6 +43,11 @@ export default class Component {
 
     #setMount() {
         this.isMount = true;
+    }
+
+    useRef(query) {
+        if (!query) return;
+        return { current: () => $(query, this.$target) };
     }
 
     setEvent() {}
