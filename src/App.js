@@ -1,7 +1,7 @@
 import { Component } from '@/core/Component';
 import { Routes, Router } from '@/core/Router';
 import { Header } from '@/components';
-import { Home, Project, Todo } from '@/pages';
+import { Home, Project, Todo, TodoDetail } from '@/pages';
 
 export default class App extends Component {
     constructor({ $parent, props }) {
@@ -18,6 +18,7 @@ export default class App extends Component {
             { path: '/', Component: Home },
             { path: '/project', Component: Project },
             { path: '/todo', Component: Todo },
+            { path: '/todo/:todoID', Component: TodoDetail },
         ];
 
         new Routes({ $parent: this.$parent, routes, Header });
