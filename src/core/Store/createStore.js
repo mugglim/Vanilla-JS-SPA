@@ -1,4 +1,4 @@
-const createStore = (initState, reducer) => {
+const createStore = (initState = {}, reducer) => {
     let state = initState;
     let subscriberList = [];
 
@@ -8,16 +8,17 @@ const createStore = (initState, reducer) => {
         state = { ...state, ...newState };
     };
 
-    const subscribe = renderCallback => {
-        subscriberList.push(renderCallback);
+    const subscribe = callback => {
+        subscriberList.push(callback);
     };
 
     const notify = () => {
-        subscriberList.forEach(renderCallback => renderCallback());
+        subscriberList.forEach(callback => callback());
     };
 
     const dispatch = action => {
-        setState(reducer(state, action));
+        const newState = reducer(state, action);
+        setState(newState);
         notify();
     };
 
