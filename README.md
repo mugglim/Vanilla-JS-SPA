@@ -30,10 +30,10 @@ npm run test
 ## API
 
 -   [core/Components.js](#corecomponentjs)
--   [core/Router.js](#corerouter)]
+-   [core/Router.js](#corerouter)
 -   [core/Store.js](#corestore)
 
-## core/Component.js
+## core/Component
 
 ### `setup({element, state})`
 
