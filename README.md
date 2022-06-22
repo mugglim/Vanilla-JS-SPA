@@ -1,34 +1,150 @@
 # Vanilla-JS-SPA
 
-> **🔥🔥🔥 Learning by doing and just do it! 🔥🔥🔥**
+Simple SPA project with Vanilla JavaScript.
 
-## 🎯 Goal
+<img src="https://img.shields.io/badge/Javascript-000000?style=for-the-badge&logo=Javascript&logoColor=F7DF1E"> [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/mugglim/Vanilla-JS-SPA/blob/main/LICENSE)
 
--   SPA를 Vanilla JS으로 구현해보자. (시간이 되면 TS 적용도..)
--   SPA Router, State magement를 적용해보자.
--   Just Do It!
+## TOC
 
-## 💻 Scripts
+-   [Setup](#setup)
+-   [API](#api)
+-   [Example](#examples)
+-   [License](#license)
 
-### run
-
-```bash
-# 1. run
-npm run dev
-
-# 2. visit site
-http://localhost:3000/
-```
-
-### build
+## Setup
 
 ```bash
+npm install
+
+# serve
+npm run dev   # visit http://localhost:3000/
+
+# build
 npm run build
+
+# test
+npm run test
+
 ```
 
-## 😀 Demo
+## API
 
-### Component
+-   [core/Components.js](#corecomponentjs)
+-   [core/Router.js](#corerouter)]
+-   [core/Store.js](#corestore)
+
+## core/Component.js
+
+### `setup({element, state})`
+
+Create target element and state.
+
+```js
+this.setup({
+    element: `<div class="counter"></div>`, // for $target element
+    state: { count: 0 }, // for inital state
+});
+```
+
+### `setState(newState)`
+
+Change local state to newState
+
+### `setEvent()`
+
+Subscribe event to target element using Event Delegation.
+
+```js
+setEvent(){
+    // [query, eventType, eventHandler]
+    return [
+        ['.foo', 'click', 'handleFooClick'],
+        ['.bar', 'click', 'handleBarClick'],
+    ]
+}
+```
+
+### `useRef()`
+
+Retrun a mutable ref object like `React.useRef()`. You must set ref variable in `didMount()`;
+
+```js
+didMount(){
+    // set
+    this.$fooRef = this.useRef('.foo');
+
+    // get
+    const $foo = this.$fooRef.current();
+}
+```
+
+[🔼 TOC](#toc)
+
+## core/Router
+
+### `Router.useParams()`
+
+Return an object of key/value pairs of the dynamic params.
+
+### `Router.navigateTo(path)`
+
+Change location and render new component.
+
+### `Router.subscribe({path, Component})`
+
+Subscribe Component to Router with path.
+
+### `Router.handlePopstate()`
+
+Handle popstate event. Muse set this method to window.popstate event for using router.
+
+### `Routes({$parent, routes, Header?})`
+
+Set routes. Header Component is optinal argument.
+
+```js
+didMount(){
+    const routes = [
+        { path: '/', Component: Home },
+        { path: '/foo', Component: Foo },
+        { path: '/bar', Component: Bar },
+    ];
+
+    new Routes({ $parent: this.$parent, routes});
+}
+```
+
+[🔼 TOC](#toc)
+
+## core/Store
+
+### `createAction(type, createPayload)`
+
+Return type and action.
+
+```js
+import { createAction } from '@/core/Store';
+
+const [ADD_TODO, addTodo] = createAction('ADD_TODO', todo => {
+    return { payload: { todo } };
+});
+```
+
+### `createStore(initalState, reducer)`
+
+Create a store.
+
+```js
+import { createStore } from '@/core/Store';
+
+const fooStore = createStore(initalState, fooReducer);
+```
+
+[🔼 TOC](#toc)
+
+## Example
+
+### Simple Counter
 
 ```js
 import { Component } from '@/core/Component';
@@ -37,8 +153,8 @@ class Counter extends Component {
     constructor({ $parent }) {
         super({ $parent });
         this.setup({
-            state: { count: 0 }, // for inital state
-            element: `<div class="counter"></div>`, // for $target element
+            state: { count: 0 },
+            element: `<div class="counter"></div>`,
         });
     }
 
@@ -68,106 +184,8 @@ class Counter extends Component {
 }
 ```
 
-### Routing
+[🔼 TOC](#toc)
 
-#### Routes
+## License
 
-```js
-import { Component } from '@/core/Component';
-import { Routes } from '@/core/Router';
-import { Home, TodoDetail } from '@/pages';
-import { Header } from '@/components';
-
-export default class App extends Component {
-    constructor({ $parent }) {
-        super({ $parent });
-        this.setup({});
-    }
-
-    template() {
-        return ``;
-    }
-
-    didMount() {
-        const routes = [
-            { path: '/', Component: Home },
-            { path: '/todo/:todoId', Component: TodoDetail },
-        ];
-        // using Header Component wtih Routes Component for navgiate
-        new Routes({ $parent: this.$parent, routes, Header });
-    }
-}
-```
-
-#### useParams
-
-```js
-import { Component } from '@/core/Component';
-import { Router } from '@/core/Router';
-
-export default class TodoDetail extends Component {
-    constructor({ $parent }) {
-        super({ $parent });
-        this.setup({ element: `<div class="todo__item"></div>` });
-    }
-
-    template() {
-        const { title, body } = this.state.todo;
-
-        return `
-            <h1>${title}</h1>
-            <h3>${body}</h3>
-        `;
-    }
-
-    async fetchTodo() {
-        // using param and fetching data
-        const { todoId } = Router.useParams();
-        const todo = await fetch(`/todo/${todoId}`);
-        this.setState({ todo });
-    }
-
-    didMount() {
-        fetchTodo();
-    }
-}
-```
-
-## ✅ Check List
-
--   Component
-
-    -   [x] mount 전, 후를 확인하는 생명 주기 메소드를 제공한다.
-    -   [x] 상태가 변경될 때 마다 렌더링이 다시 발생한다.
-    -   [x] props를 통해 자식 컴포턴트에 상태를 전달 할 수 있다.
-
--   지역 상태 관리
-
-    -   [x] 상태가 지역적으로 동작한다. (다른 지역상태에 영향 X)
-
--   전역 상태 관리
-    -   [x] flux 패턴을 이용하였다. (action,dispatch)
-    -   [x] 싱글톤으로 전역 store가 관리된다.
--   Build
-    -   [x] Webpack을 통해 빌드하였다.
-    -   [x] Babel을 통해 ES6+ 이후 문법을 트랜스파일링 된다.
-    -   [x] core-js를 통해 promise, async, await 같은 문법을 폴리필 하였다.
--   SPA router
-    -   [x] 라우팅 과정에서 새로고침이 발생하지 않는다.
-    -   [x] 새로고침을 해도 현재 페이지가 유지된다.
-    -   [x] 동적 라우팅을 적용한다.
-    -   [ ] 라우팅 과정에서 스크롤 위치가 복원된다.
--   httpRequest(optional)
-    -   [x] fetch 함수를 추상화하여 사용한다.
-    -   [x] async/await (then을 사용하지 않는다.)
-    -   [ ] 응답의 요청/실패에 대한 UI처리를 수행한다. => `Toast` 만들어보기
-    -   [ ] 라우팅 과정에서 api 재호출을 방지해본다.
--   infinite scroll(optional)
-    -   [x] Intersection Observer을 적용했다.
--   util(optional)
-    -   [x] debounce, throttling
-    -   [x] functional programming(go, pipe, curry, filter, each)
-
-### notes
-
--   [History API](./docs/notes/historyAPI.md)
+This project is [MIT license](./LICENSE).
