@@ -3,6 +3,8 @@ import { Routes, Router } from '@/core/Router';
 import { Header } from '@/components';
 import { Home, Project, Todo, TodoDetail } from '@/pages';
 
+import './App.scss';
+
 export default class App extends Component {
     constructor({ $parent, props }) {
         super({ $parent, props });
